@@ -24,6 +24,12 @@ This is the To-Do list for CubeDood ReCubed.
 - [ ] Sound Design
 - [ ] Soundtrack
 - [ ] Story
+- [ ] 30 2-Player Levels
+- [ ] Achievements
+- [ ] Game Saving
+- [ ] Game Loading
+- [ ] Options
+- [ ] Speedrun Mode
 - [ ] Bug Fixing & Testing
 - [ ] Game Polish
 - [ ] Game Release
