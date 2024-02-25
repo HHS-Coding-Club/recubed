@@ -22,7 +22,7 @@ This is the To-Do list for CubeDood ReCubed.
 - [ ] (Optional) Level Sharing & Rating
 - [ ] Sprite Design
 - [ ] Sound Design
-- [ ] Soundtrack
+- [x] Soundtrack
 - [ ] Story
 - [ ] 30 2-Player Levels
 - [ ] Achievements
