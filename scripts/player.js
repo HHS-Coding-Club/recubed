@@ -25,6 +25,11 @@ var player = {
     score: 0 // Score
 }
 
+var acceleration = 0.2;
+var deceleration = 0.1;
+
+var maxVelocity = 4;
+
 /*
     drawPlayer
     Draws the player to the screen based on the player's position,
@@ -39,31 +44,20 @@ function drawPlayer()
     switch (player.direction)
     {
         case 'r':
-            if (!player.isGrounded)
-            {
-                ctx.fillRect(player.xPos + 8, player.yPos, 8, 8);
-                ctx.fillRect(player.xPos + 24, player.yPos, 8, 8);
-            } else if (player.isSneaking)
-            {
-                ctx.fillRect(player.xPos + 8, player.yPos + 16, 8, 8);
-                ctx.fillRect(player.xPos + 24, player.yPos + 16, 8, 8);
-            } else
-            {
-                ctx.fillRect(player.xPos + 8, player.yPos + 8, 8, 8);
-                ctx.fillRect(player.xPos + 24, player.yPos + 8, 8, 8);
-            }
+            ctx.fillRect(player.xPos + 8, player.yPos + 8, 8, 8);
+            ctx.fillRect(player.xPos + 24, player.yPos + 8, 8, 8);
             break;
         case 'l':
-            if (!player.isGrounded) {
-                ctx.fillRect(player.xPos + 8, player.yPos, 8, 8);
-                ctx.fillRect(player.xPos + 24, player.yPos, 8, 8);
-            } else if (player.isSneaking) {
-                ctx.fillRect(player.xPos, player.yPos + 16, 8, 8);
-                ctx.fillRect(player.xPos + 16, player.yPos + 16, 8, 8);
-            } else {
-                ctx.fillRect(player.xPos, player.yPos + 8, 8, 8);
-                ctx.fillRect(player.xPos + 16, player.yPos + 8, 8, 8);
-            }
+            ctx.fillRect(player.xPos, player.yPos + 8, 8, 8);
+            ctx.fillRect(player.xPos + 16, player.yPos + 8, 8, 8);
+            break;
+        case 'ur':
+            ctx.fillRect(player.xPos + 8, player.yPos, 8, 8);
+            ctx.fillRect(player.xPos + 24, player.yPos, 8, 8);
+            break;
+        case 'ul':
+            ctx.fillRect(player.xPos, player.yPos, 8, 8);
+            ctx.fillRect(player.xPos + 16, player.yPos, 8, 8);
             break;
     }
 }
@@ -79,17 +73,173 @@ function handlePlayerMovement()
             player.yVelocity = -player.jumpHeight * 2;
         }
     }
+
+    if (keys[37] || keys[65])
+    {
+        if (player.xVelocity > -player.speed)
+        {
+            player.xVelocity--;
+            player.direction = 'l';
+        }
+    }
+
+    if (keys[39] || keys[68])
+    {
+        if (player.xVelocity < player.speed)
+        {
+            player.xVelocity++;
+            player.direction = 'r';
+        }
+    }
+
+    if (keys[16])
+    {
+        player.speed = 8;
+    } else if (keys[90])
+    {
+        player.speed = 1;
+    } else
+    {
+        player.speed = 4;
+    }
 }
 
 function handlePhysics()
 {
+    if (player.yPos < canvas.height - player.height)
+    {
+        player.isJumping = true;
+        player.isGrounded = false;
+    }
 
+    player.xVelocity *= player.friction;
+    player.yVelocity += player.gravity;
+    player.xPos += player.xVelocity;
+    player.yPos += player.yVelocity;
+
+    if (player.xPos >= canvas.width - player.width)
+    {
+        player.xPos = canvas.width - player.width;
+    } else if (player.xPos <= 0)
+    {
+        player.xPos = 0;
+    }
+
+    if (player.yPos >= canvas.height - player.height)
+    {
+        player.yPos = canvas.height - player.height;
+        player.isJumping = false;
+        player.isGrounded = true;
+    }
+
+    if (player.isJumping && !player.isGrounded)
+    {
+        if (player.direction == 'r')
+        {
+            player.direction = 'ur';
+        } else if (player.direction == 'l')
+        {
+            player.direction = 'ul';
+        }
+    } else 
+    {
+        if (player.direction == 'ur')
+        {
+            player.direction = 'r';
+        } else if (player.direction == 'ul')
+        {
+            player.direction = 'l';
+        }
+    }
+}
+
+function collisionSide(player, tile)
+{
+    var deltaX = player.xPos + player.width / 2 - (tile.xPos + tile.width / 2);
+    var deltaY = player.yPos + player.height / 2 - (tile.yPos + tile.height / 2);
+
+    if (Math.abs(deltaX) > Math.abs(deltaY))
+    {
+        return deltaX > 0 ? "r" : "l";
+    } else {
+        return deltaY > 0 ? "b" : "t";
+    }
+}
+
+function collisionCheck(level)
+{
+    for (var i = 0; i < level.length; i++)
+    {
+        for (var j = 0; j < level[i].length; j++)
+        {
+            var x = j * 32;
+            var y = i * 32;
+            var tile = {
+                xPos: x,
+                yPos: y,
+                width: 32,
+                height: 32
+            }
+            var collision = player.xPos < x + tile.width && player.xPos + player.width > x && player.yPos < y + tile.height && player.yPos + player.height > y;
+            if (!collision) continue;
+            switch (level[i][j])
+            {
+                case 0: // Empty Block
+                    break;
+                case 1: // Flag
+                    // Level Completed
+                    break;
+                case 2: // Teleporter Block
+                    break;
+                case 3: // Teleporter Receiver
+                    break;
+                case 4: // Wall
+                    var side = collisionSide(player, tile);
+                    switch (side)
+                    {
+                        case "b":
+                            player.yPos = tile.yPos + tile.height;
+                            player.yVelocity = 0;
+                            break;
+                        case "t":
+                            player.isGrounded = true;
+                            player.isJumping = false;
+                            player.yPos = tile.yPos - player.height;
+                            player.yVelocity = 0;
+                            break;
+                        case "r":
+                            player.xPos = tile.xPos + tile.width;
+                            player.xVelocity = 0;
+                            break;
+                        case "l":
+                            player.xPos = tile.xPos - player.width;
+                            player.xVelocity = 0;
+                            break;
+                    }
+                    break;
+                case 5: // Spike
+                    break;
+                case 6: // Coin
+                    break;
+                case 7: // Lava
+                    break;
+                case 8: // Bounce Pad
+                    break;
+                case 9: // Start Pos
+                    break;
+                case 10: // TopHat
+                    break;
+                case 11: // Mini Platform
+                    break;
+                case 12: // Ice Block
+                    break;
+            }
+        }
+    }
 }
 
 function playerController()
 {
     handlePlayerMovement();
     handlePhysics();
-
-    drawPlayer();
 }

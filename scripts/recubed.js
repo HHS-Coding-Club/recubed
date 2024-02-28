@@ -34,12 +34,36 @@ var ctx = canvas.getContext('2d');
 canvas.width = 800;
 canvas.height = 640;
 
-// Run the update function 60 times per second.
-setInterval(update, 1000 / 60);
+var lastUpdateTime = performance.now();
+var deltaTime = 0;
+var fpsInterval = 1000 / 60
+
+var level = 
+[]
 
 function update() {
-    drawBackground('black');
-    drawText('CubeDood: ReCubed', 10, 32, 32, 'white');
+    requestAnimationFrame(update);
 
-    playerController();
+    var currentTime = performance.now();
+    var elapsed = currentTime - lastUpdateTime;
+
+    deltaTime += elapsed;
+
+    while (deltaTime >= fpsInterval)
+    {
+        playerController();
+        deltaTime -= fpsInterval;
+    }
+
+    drawSprites();
+
+    lastUpdateTime = currentTime;
 }
+
+function drawSprites()
+{
+    drawBackground("orange");
+    drawPlayer();
+}
+
+update();
