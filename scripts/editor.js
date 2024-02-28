@@ -23,8 +23,6 @@
         - Shift - R: Reset the level.
         - Esc: Exit the level editor without saving.
         - Space: Playtest the level.
-
-    
 */
 
 const x = 25;

@@ -20,15 +20,26 @@
     CubeDood: ReCubed is coming soon to web browsers near you. Stay tuned for more information.
 */
 
+/*
+    JavaScript files for CubeDood: ReCubed.
+
+    - recubed.js: Main file for the game, bootstraps the game and runs everything in a loop.
+    - editor.js: Level editor for CubeDood: ReCubed, allows you to create your own levels.
+    - controls.js: Controls for the game, basically just a huge event handler.
+*/
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
 canvas.width = 800;
 canvas.height = 640;
 
-setInterval(update(), 1000 / 60);
+// Run the update function 60 times per second.
+setInterval(update, 1000 / 60);
 
 function update() {
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    drawBackground('black');
+    drawText('CubeDood: ReCubed', 10, 32, 32, 'white');
+
+    playerController();
 }

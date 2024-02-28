@@ -5,7 +5,7 @@ This is the To-Do list for CubeDood ReCubed.
 ## List
 
 - [ ] Basic rendering engine
-- [ ] Player Controller
+- [x] Player Controller
 - [ ] Player Physics
 - [ ] Basic UI
 - [ ] Basic Audio
