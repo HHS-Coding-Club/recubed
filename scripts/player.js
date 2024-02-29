@@ -184,7 +184,7 @@ function collisionCheck(level)
             if (!collision) continue;
             switch (level[i][j])
             {
-                case 0: // Empty Block
+                case 0: // Empty Block 
                     break;
                 case 1: // Flag
                     // Level Completed
