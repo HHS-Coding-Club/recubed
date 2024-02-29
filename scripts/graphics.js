@@ -8,7 +8,8 @@
     drawBackground
     Draws a specific color to the background of the canvas.
 */
-function drawBackground(color) {
+function drawBackground(color)
+{
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
@@ -17,13 +18,24 @@ function drawBackground(color) {
     drawText
     Draws text to the screen.
 */
-function drawText(text, x, y, size, color) {
+function drawText(text, x, y, size, color)
+{
     ctx.font = size + 'px Arial';
     ctx.fillStyle = color;
     ctx.fillText(text, x, y);
 }
 
 /*
+    createBlock
+    Creates a block and places it in x*w, y*h spot.
+*/
+function createBlock(color, x, y, w, h)
+{
+
+}
+
+/*
+
     drawLevel
     Takes a level as input and draws the blocks
 */

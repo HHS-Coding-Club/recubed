@@ -26,6 +26,23 @@
     - recubed.js: Main file for the game, bootstraps the game and runs everything in a loop.
     - editor.js: Level editor for CubeDood: ReCubed, allows you to create your own levels.
     - controls.js: Controls for the game, basically just a huge event handler.
+    - graphics.js: Extra functions and methods for screwing around with the graphics and looks of the game.
+    - player.js: Player functions and how the player works.
+*/
+
+/*
+    Notes:
+        - Add a CubeDood ReCubed demo for the 8th graders at Tri-Tech to play.
+            Due Date: Assuming 3/14 atm. May be a different time.
+
+            This demo will include:
+                - 40 levels for the kids to try.
+                - A working version of the level editor.
+                - A sneak peak of the final boss.
+                - A cutscene explaining the game with CubeDood explaining how he moves.
+
+            CubeDood: ReCubed (Regular Version) will include a easter egg where if you type the key combination
+            "demo" on the title screen, you will be redirected to the demo version of the game. 
 */
 
 var canvas = document.getElementById('canvas');
@@ -38,8 +55,7 @@ var lastUpdateTime = performance.now();
 var deltaTime = 0;
 var fpsInterval = 1000 / 60
 
-var level = 
-[]
+var level = [];
 
 function update() {
     requestAnimationFrame(update);
@@ -66,4 +82,4 @@ function drawSprites()
     drawPlayer();
 }
 
-update();
+requestAnimationFrame(update);
