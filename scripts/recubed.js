@@ -55,6 +55,8 @@ var lastUpdateTime = performance.now();
 var deltaTime = 0;
 var fpsInterval = 1000 / 60;
 
+var levelHasStarted = false;
+
 var level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -69,13 +71,13 @@ var level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 7, 7, 7, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 10, 10, 10, 12, 0, 0, 0, 0, 0, 13, 0, 14, 0]
 ];
 
 function update() {
@@ -86,22 +88,85 @@ function update() {
 
     deltaTime += elapsed;
 
+    if (!levelHasStarted) 
+    {
+        startLevel(level);
+    }
+
     while (deltaTime >= fpsInterval)
     {
         playerController();
         deltaTime -= fpsInterval;
     }
 
-    drawSprites();
+    drawToScreen();
 
     lastUpdateTime = currentTime;
 }
 
-function drawSprites()
+/*
+    drawToScreen
+    There are 5 different layers to draw to the screen:
+    - Background
+    - Foreground
+    - Objects (level)
+    - Player
+    - UI
+*/
+function drawToScreen()
 {
-    drawBackground("orange");
+    clearCanvas();
+
+    drawBackgroundImage();
+    drawForeground();
     drawLevel(level);
     drawPlayer();
+    drawUI();
+}
+
+function drawUI()
+{
+    // Display the players score
+    ctx.fillStyle = "white";
+    ctx.font = "24px Arial";
+    ctx.fillText("Score: " + player.score, 10, 30);
+
+    // Display the players deaths
+    ctx.fillStyle = "white";
+    ctx.font = "24px Arial";
+    ctx.fillText("Deaths: " + player.deaths, 10, 60);
+}
+
+function drawForeground()
+{
+    // To be implemented. (This is level decorations)
+}
+
+function clearCanvas()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function startLevel(level)
+{
+    // Load the level, and start the player at the start position.
+
+    for (var i = 0; i < level.length; i++)
+    {
+        for (var j = 0; j < level[i].length; j++)
+        {
+            if (level[i][j] == 3)
+            {
+                player.xPos = j * 32;
+                player.yPos = i * 32;
+
+                player.start_xPos = j * 32;
+                player.start_yPos = i * 32;
+            }
+        }
+    }
+
+    levelHasStarted = true;
 }
 
 requestAnimationFrame(update);
