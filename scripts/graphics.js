@@ -4,6 +4,9 @@
     This JavaScript file is just full of utility functions that are used to draw things to the screen.
 */
 
+var flag = new Image();
+flag.src = 'assets/game/flag.png';
+
 /*
     drawBackground
     Draws a specific color to the background of the canvas.
@@ -31,11 +34,30 @@ function drawText(text, x, y, size, color)
 */
 function createBlock(color, x, y, w, h)
 {
-
+    ctx.fillStyle = color;
+    ctx.fillRect(x*w, y*h, w, h);
 }
 
 /*
+    createFlag
+    Creates the goal flag for the end of the level.
+*/
+function createFlag(x, y, w, h)
+{
+    ctx.drawImage(flag, x*w, y*h, w, h);
+}
 
+/*
+    createCoin
+    Creates the coin sprite.
+*/
+function createCoin(x, y, w, h)
+{
+    ctx.fillStyle = 'yellow';
+    // Create a square rotated 45 degrees that is centered on the x and y 
+}
+
+/*
     drawLevel
     Takes a level as input and draws the blocks
 */
@@ -43,9 +65,14 @@ function drawLevel(level) {
     for (var i = 0; i < level.length; i++) {
         for (var j = 0; j < level[i].length; j++) {
             switch (level[i][j]) {
+                case 1:
+                    createFlag(j, i, 32, 32);
+                    break;
                 case 4:
-                    ctx.fillStyle = "black";
-                    ctx.fillRect(j * 32, i * 32, 32, 32);
+                    createBlock('black', j, i, 32, 32);
+                    break;
+                case 6:
+                    createCoin(j, i, 32, 32);
                     break;
             }
         }

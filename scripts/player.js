@@ -151,6 +151,8 @@ function handlePhysics()
             player.direction = 'l';
         }
     }
+
+    collisionCheck(level);
 }
 
 function collisionSide(player, tile)
@@ -206,6 +208,13 @@ function collisionCheck(level)
                             player.isJumping = false;
                             player.yPos = tile.yPos - player.height;
                             player.yVelocity = 0;
+
+                            if (player.direction == 'ur') {
+                                player.direction = 'r';
+                            } else if (player.direction == 'ul') {
+                                player.direction = 'l';
+                            }
+                            
                             break;
                         case "r":
                             player.xPos = tile.xPos + tile.width;
