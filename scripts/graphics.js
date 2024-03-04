@@ -200,3 +200,8 @@ function drawLevel(level) {
         }
     }
 }
+
+function drawLevelForeground(level)
+{
+    
+}
