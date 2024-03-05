@@ -10,7 +10,7 @@ It's up to you to stop him and save CubeLand once again.
 Play through 120+ levels of pure cube action, with new mechanics and puzzles as
 CubeDood returns to CubeLand in this epic reimagining of the original CubeDood.
 
-Game Features:
+Game Features:    
     - Main Story: Player through 120+ levels of pure cube action, with new mechanics and puzzles.  
     - Speedrun Mode: Play through the game with a timer, and no custscenes, to see how fast you can complete the game.   
     - Level Editor: Create your own levels and share them with the world.   
