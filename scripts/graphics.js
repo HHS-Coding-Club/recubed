@@ -203,5 +203,6 @@ function drawLevel(level) {
 
 function drawLevelForeground(level)
 {
+    // Essentially just the same as drawLevel but with different objects and images.
     
 }
