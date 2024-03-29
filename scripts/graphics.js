@@ -141,6 +141,33 @@ function createCoin(x, y, w, h)
 }
 
 /*
+    drawUI
+    Draws the UI to the screen.
+    Modify this function as much as you want
+*/
+function drawUI()
+{
+    ctx.fillStyle = "white";
+    ctx.font = "24px Arial";
+    ctx.fillText("Score: " + player.score, 10, 30);
+
+    ctx.fillStyle = "white";
+    ctx.font = "24px Arial";
+    ctx.fillText("Deaths: " + player.deaths, 10, 60);
+}
+
+function drawForeground()
+{
+
+    // TODO: Move this function to graphics.js   
+}
+
+function clearCanvas()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+/*
     drawLevel
     Takes a level as input and draws the blocks
 */

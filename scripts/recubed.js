@@ -147,33 +147,6 @@ function drawToScreen()
     drawUI();
 }
 
-function drawUI()
-{
-    // Display the players score
-    ctx.fillStyle = "white";
-    ctx.font = "24px Arial";
-    ctx.fillText("Score: " + player.score, 10, 30);
-
-    // Display the players deaths
-    ctx.fillStyle = "white";
-    ctx.font = "24px Arial";
-    ctx.fillText("Deaths: " + player.deaths, 10, 60);
-}
-
-function drawForeground()
-{
-    /*
-        All foreground objects will be stored in a secondary array, and will be drawn to the screen separately.
-    */
-
-    
-}
-
-function clearCanvas()
-{
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
 function startLevel(level)
 {
     // Load the level, and start the player at the start position.
