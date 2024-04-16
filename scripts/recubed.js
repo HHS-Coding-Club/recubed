@@ -192,7 +192,7 @@ function setKeyTimeout(keyPressed)
     keys[keyPressed] = false;
     setTimeout(function() {
         canPressKey = true;
-    }, 100);
+    }, 100); 
 }
 
 requestAnimationFrame(update);

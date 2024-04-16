@@ -5,6 +5,7 @@
 */
 
 var SFX_Playing = false;
+var MUSIC_Playing = false;
 
 var RECUBED_main_menu = new Audio("assets/ost/CubeDood ReCubed.mp3");
 var RECUBED_settings_menu = new Audio("assets/ost/Meeting with the Cube.mp3");
@@ -42,5 +43,13 @@ function handlePlayerSFX(sfx)
     if (!SFX_Playing)
     {
 
+    }
+}
+
+function handleMusicPlay(music)
+{
+    if (!MUSIC_Playing)
+    {
+        
     }
 }
