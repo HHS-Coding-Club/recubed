@@ -147,13 +147,9 @@ function createCoin(x, y, w, h)
 */
 function drawUI()
 {
-    ctx.fillStyle = "white";
-    ctx.font = "24px Arial";
-    ctx.fillText("Score: " + player.score, 10, 30);
-
-    ctx.fillStyle = "white";
-    ctx.font = "24px Arial";
-    ctx.fillText("Deaths: " + player.deaths, 10, 60);
+    // Write scores and deaths at the top, with white text with a black border
+    drawText("Score: " + player.score, 10, 30, 24, 'white');
+    drawText("Deaths: " + player.deaths, 10, 60, 24, 'white');
 }
 
 function drawForeground()
@@ -232,4 +228,43 @@ function drawLevelForeground(level)
 {
     // Essentially just the same as drawLevel but with different objects and images.
     
+}
+
+/*
+    drawStartScreen
+    Draws the start screen. (A black screen that says press space to start)
+*/
+function drawStartScreen()
+{
+    drawBackground('black');
+    drawText("Press Space to Start", canvas.width/2 - 100, canvas.height/2, 24, 'white');
+}
+
+/*
+    drawMainMenu
+    Draws the main menu.
+*/
+function drawMainMenu()
+{
+    drawBackground('orange');
+    drawText("CubeDood: ReCubed", canvas.width/2 - 100, 100, 24, 'black');
+    
+    // Draw a button that says "Start"
+    drawText("Start", canvas.width/2 - 100, 200, 24, 'black');
+    // Put a rectangle around the button
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(canvas.width/2 - 125, 175, 150, 50);
+
+    // Draw a button that says "Options"
+    drawText("Options", canvas.width/2 - 100, 300, 24, 'black');
+    // Put a rectangle around the button
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(canvas.width/2 - 125, 275, 150, 50);
+
+    // Draw a button that says "Credits"
+    drawText("Credits", canvas.width/2 - 100, 400, 24, 'black');
+    // Put a rectangle around the button
+    ctx.strokeStyle = 'black';
+    ctx.strokeRect(canvas.width/2 - 125, 375, 150, 50);
+
 }
