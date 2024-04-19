@@ -141,6 +141,21 @@ function createCoin(x, y, w, h, color1, color2)
 }
 
 /*
+    drawDebug
+    Draws the debug information to the screen.
+*/
+function drawDebug(elapsed)
+{
+    drawText("Delta: " + Math.round(deltaTime), 700, 30, 16, 'white');
+    drawText("FPS: " + Math.round(1000 / elapsed), 700, 60, 16, 'white');
+    drawText("X: " + Math.round(player.xPos), 700, 90, 16, 'white');
+    drawText("Y: " + Math.round(player.yPos), 700, 120, 16, 'white');
+    drawText("VelX: " + Math.round(player.xVelocity), 700, 150, 16, 'white');
+    drawText("VelY: " + Math.round(player.yVelocity), 700, 180, 16, 'white');
+    drawText("Level: " + currentLevel, 700, 210, 16, 'white');    
+}
+
+/*
     drawUI
     Draws the UI to the screen.
     Modify this function as much as you want
