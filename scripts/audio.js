@@ -34,6 +34,7 @@ var RECUBED_boss_cubie = new Audio('assets/ost/Cylinder Blunder.mp3');
 var RECUBED_boss_tophat = new Audio('assets/ost/Dance With Me CubeDood!.mp3');
 var RECUBED_boss_maximumTophat = new Audio('assets/ost/Maximus Square.mp3');
 var RECUBED_boss_falsedood = new Audio('assets/ost/Quadrilateral Collateral.mp3');
+// Boss Order: CubeTop, Cubie, Brute, FalseDood, CubeTop, Maximum CubeTop
 
 RECUBED_main_menu.loop = true;
 RECUBED_level_bolt.loop = true;

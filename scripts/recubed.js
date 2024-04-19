@@ -1,3 +1,11 @@
+/*
+    TODO: 
+        - Change audio / music playing from running off of the recubed.js file running on the audio.js file. (audioPlaying to MUSIC_playing or smth)
+        - Move rendering completely to the graphics.js file
+        - Add new objects lol
+        - Get new spike sprites
+*/
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -12,8 +20,9 @@ var levelHasStarted = false;
 
 var currentMenuOption = "start";
 
-var canPressKey = true;
+var currentPlayableCharacter = "CubeTop"; // CubeDood, CubeTop, Cubie, and CubeBrute
 
+var canPressKey = true;
 var audioPlaying = false;
 
 var level = [
@@ -32,7 +41,7 @@ var level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 4, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 7, 7, 7, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -98,7 +107,7 @@ function drawLevelToScreen()
     drawBackgroundImage();
     drawForeground();
     drawLevel(level);
-    drawPlayer();
+    drawPlayer(currentPlayableCharacter);
     drawUI();
 }
 

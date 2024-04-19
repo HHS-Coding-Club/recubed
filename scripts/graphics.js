@@ -122,9 +122,9 @@ function createGoal(x, y, w, h)
     createCoin
     Creates a coin object. A smaller square rotated 45 degrees.
 */
-function createCoin(x, y, w, h)
+function createCoin(x, y, w, h, color1, color2)
 {
-    ctx.fillStyle = 'yellow';
+    ctx.fillStyle = color1;
     ctx.save();
     ctx.translate(x*w + w/2, y*h + h/2);
     ctx.rotate(Math.PI / 4);
@@ -132,7 +132,7 @@ function createCoin(x, y, w, h)
     ctx.restore();
 
     // make this twice as small and white instead
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = color2;
     ctx.save();
     ctx.translate(x*w + w/2, y*h + h/2);
     ctx.rotate(Math.PI / 4);
@@ -175,7 +175,7 @@ function drawLevel(level) {
                     createGoal(j, i, 32, 32);
                     break;
                 case 2: // Coin
-                    createCoin(j, i, 32, 32);
+                    createCoin(j, i, 32, 32, "yellow", "white");
                     break;
                 case 3: // Start-Pos
                     drawStartPos(j, i, 32, 32);
@@ -218,6 +218,41 @@ function drawLevel(level) {
                     break;
                 case 16: // Tall Spike
                     ctx.drawImage(tall_spike, j*32, i*32, 32, 32);
+                    break;
+                case 17: // Blue Teleporter
+                    createBlock('blue', j, i, 32, 32);
+                    break;
+                case 18: // Red Teleporter
+                    createBlock('red', j, i, 32, 32);
+                    break;
+                case 19: // Purple Teleporter
+                    createBlock('purple', j, i, 32, 32);
+                    break;
+                case 20: // Orange
+                    createBlock('orange', j, i, 32, 32);
+                    break;
+                case 21: // Green
+                    createBlock('green', j, i, 32, 32);
+                    break;
+                case 22: // Yellow
+                    createBlock('yellow', j, i, 32, 32);
+                    break;
+                case 23: // CubeDood OG Tile
+                    createBlock('black', j, i, 32, 32);
+                    break;
+                case 24: // The "Work In Progress" Block
+                    // Give this block a black outline
+                    ctx.strokeStyle = 'black';
+                    ctx.strokeRect(j*32, i*32, 32, 32);
+                    break;
+                case 25: // The "Intended Feature" Block
+                    // Give this block a white outline
+                    ctx.strokeStyle = 'white';
+                    ctx.strokeRect(j*32, i*32, 32, 32);
+                    break;
+                case 26: 
+                    // Draw the coin sprite, except its white
+                    createCoin(j, i, 32, 32, "white", "black");
                     break;
             }
         }

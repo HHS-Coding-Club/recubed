@@ -38,30 +38,105 @@ var maxVelocity = 4;
     drawPlayer
     Draws the player to the screen based on the player's position,
 */
-function drawPlayer()
+function drawPlayer(character)
 {
-    ctx.fillStyle = 'white';
-    ctx.fillRect(player.xPos, player.yPos, player.width, player.height);
-
-    ctx.fillStyle = 'black';
-    
-    switch (player.direction)
+    switch (character)
     {
-        case 'r':
-            ctx.fillRect(player.xPos + 8, player.yPos + 8, 8, 8);
-            ctx.fillRect(player.xPos + 24, player.yPos + 8, 8, 8);
+        default:
+        case "CubeDood":
+            ctx.fillStyle = 'white';
+            ctx.fillRect(player.xPos, player.yPos, player.width, player.height);
+
+            ctx.fillStyle = 'black';
+    
+            switch (player.direction)
+            {
+                case 'r':
+                    ctx.fillRect(player.xPos + 8, player.yPos + 8, 8, 8);
+                    ctx.fillRect(player.xPos + 24, player.yPos + 8, 8, 8);
+                    break;
+                case 'l':
+                    ctx.fillRect(player.xPos, player.yPos + 8, 8, 8);
+                    ctx.fillRect(player.xPos + 16, player.yPos + 8, 8, 8);
+                    break;
+                case 'ur':
+                    ctx.fillRect(player.xPos + 8, player.yPos, 8, 8);
+                    ctx.fillRect(player.xPos + 24, player.yPos, 8, 8);
+                    break;
+                case 'ul':
+                    ctx.fillRect(player.xPos, player.yPos, 8, 8);
+                    ctx.fillRect(player.xPos + 16, player.yPos, 8, 8);
+                    break;
+            }
             break;
-        case 'l':
-            ctx.fillRect(player.xPos, player.yPos + 8, 8, 8);
-            ctx.fillRect(player.xPos + 16, player.yPos + 8, 8, 8);
+        case "CubeTop":
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.rect(player.xPos, player.yPos, player.width, player.height);
+            ctx.stroke();
+            ctx.closePath();
+            
+            ctx.fillStyle = 'white';
+            ctx.fillRect(player.xPos, player.yPos, player.width, player.height);
+
+            ctx.fillStyle = 'black';
+    
+            switch (player.direction)
+            {
+                case 'r':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 10, player.yPos + 10, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.arc(player.xPos + 30, player.yPos + 10, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+                case 'l':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 3, player.yPos + 10, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.arc(player.xPos + 25, player.yPos + 10, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+                case 'ur':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 10, player.yPos + 3, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.arc(player.xPos + 30, player.yPos + 3, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+                case 'ul':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 3, player.yPos + 3, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.arc(player.xPos + 25, player.yPos + 3, 3, 0, Math.PI, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+            }
+
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.rect(player.xPos + 3, player.yPos - 5, 26, 5);
+            ctx.fill();
+            ctx.closePath();
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.rect(player.xPos + 6, player.yPos - 30, 20, 25);
+            ctx.fill();
+            ctx.closePath();
+            ctx.fillStyle = "gold";
+            ctx.beginPath();
+            ctx.arc(player.xPos + 16, player.yPos - 5, 10, 0, Math.PI, true);
+            ctx.fill();
+            ctx.closePath();
+
             break;
-        case 'ur':
-            ctx.fillRect(player.xPos + 8, player.yPos, 8, 8);
-            ctx.fillRect(player.xPos + 24, player.yPos, 8, 8);
+        case "Cubie":
             break;
-        case 'ul':
-            ctx.fillRect(player.xPos, player.yPos, 8, 8);
-            ctx.fillRect(player.xPos + 16, player.yPos, 8, 8);
+        case "CubeBrute":
             break;
     }
 }
@@ -94,6 +169,12 @@ function handlePlayerMovement()
             player.xVelocity++;
             player.direction = 'r';
         }
+    }
+
+    // if the down arrow or 's' key is pressed, and the player is in the air, the player will fall faster.
+    if ((keys[40] || keys[83]) && !player.isGrounded)
+    {
+        player.yVelocity += 0.56;
     }
 
     if (keys[16])
@@ -204,7 +285,7 @@ function collisionCheck(level)
                     level[i][j] = 0;
                     break;
                 case 3: // Start-Pos
-                    // To be implemented
+                    // Implemented in recubed.js
                     break;
                 case 4: // Tile (Top)
                     tileCollision(player, tile);
@@ -245,6 +326,33 @@ function collisionCheck(level)
                 case 16: // Large Spike
                     spikeCollision(player, tile);
                     break;
+                case 17: // Blue Teleporter
+                    teleportCollision(player, tile, 18);
+                    break;
+                case 18: // Red Teleporter
+                    break;
+                case 19: // Purple Teleporter
+                    teleportCollision(player, tile, 20);
+                    break;
+                case 20: // Orange Teleporter
+                    break;
+                case 21: // Green Teleporter
+                    teleportCollision(player, tile, 22);
+                    break;
+                case 22: // Yellow Teleporter
+                    break;
+                case 23: // CubeDood OG Black
+                    tileCollision(player, tile);
+                    break;
+                case 24: // The "Work-In-Progress" Block
+                    tileColision(player, tile);
+                    break;
+                case 25: // The "Intended Feature" Block
+                    thisFunctionDoesntExist(player, tile);
+                    break;
+                case 26: // The "Close Game" Block
+                    closeGame();
+                    break;
             }
         }
     }
@@ -274,6 +382,11 @@ function resetPlayer()
     player.isGrounded = false;
     player.direction = 'r';
     player.deaths++;
+}
+
+function closeGame()
+{
+    window.close();
 }
 
 function tileCollision(player, tile)
@@ -315,5 +428,31 @@ function spikeCollision(player, tile)
     if (side == "t" || side == "b" || side == "r" || side == "l")
     {
         resetPlayer();
+    }
+}
+
+function teleportCollision(player, tile, teleporter)
+{
+    // Teleport the player to the specific teleporter.
+
+    var side = collisionSide(player, tile);
+    if (side == "t" || side == "b" || side == "r" || side == "l")
+    {
+        // Look for the teleporter tile, then set the players position to the teleporter's position
+        for (var i = 0; i < level.length; i++)
+        {
+            for (var j = 0; j < level[i].length; j++)
+            {
+                if (level[i][j] == teleporter)
+                {
+                    player.yVelocity = 0;
+                    player.xVelocity = 0;
+
+                    player.xPos = j * 32;
+                    player.yPos = i * 32;
+                    break;
+                }
+            }
+        }
     }
 }
