@@ -79,6 +79,8 @@ function update()
 {
     requestAnimationFrame(update);
 
+    clearCanvas();
+
     var currentTime = performance.now();
     var elapsed = currentTime - lastUpdateTime;
 

@@ -135,6 +135,65 @@ function drawPlayer(character)
 
             break;
         case "Cubie":
+            ctx.fillStyle = 'white';
+            ctx.rect(player.xPos, player.yPos, player.width, player.height);
+            ctx.fill();
+
+            // Draw a pink bowtie on the player
+            ctx.fillStyle = 'pink';
+            ctx.beginPath();
+            ctx.moveTo(player.xPos + 12, player.yPos + 4);
+            ctx.lineTo(player.xPos + 20, player.yPos - 4);
+            ctx.lineTo(player.xPos + 12, player.yPos - 12);
+            ctx.lineTo(player.xPos + 4, player.yPos - 4);
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw the eyes
+            ctx.fillStyle = 'black';
+
+            switch (player.direction) {
+                case 'r':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 8, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 24, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+                case 'l':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 8, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 24, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+                case 'ur':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 8, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 24, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+                case 'ul':
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 8, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.beginPath();
+                    ctx.arc(player.xPos + 24, player.yPos + 8, 2, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    ctx.closePath();
+                    break;
+            }
             break;
         case "CubeBrute":
             break;
