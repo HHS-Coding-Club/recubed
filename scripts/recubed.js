@@ -9,6 +9,16 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
+const game = {
+    name: "CubeDood: ReCubed", // Project ReCubed
+    version: {
+        major: 0,
+        minor: 0,
+        patch: 16
+    },
+    author: "Studio Cubed"
+}
+
 canvas.width = 800;
 canvas.height = 640;
 
@@ -131,24 +141,16 @@ function menuUpdate()
         case "main":
             drawMainMenu();
             
-            if (!audioPlaying)
-            {
-                RECUBED_main_menu.play();
-                audioPlaying = true;
-            }
+            handleMusicPlay(RECUBED_main_menu);
 
             break;
         case "game":
             if (!levelHasStarted)
             {
                 startLevel(level);
+                handleMusicPlay(RECUBED_level_bolt);
             }
-            
-            if (!audioPlaying)
-            {
-                RECUBED_level_bolt.play();
-                audioPlaying = true;
-            }
+        
 
             drawLevelToScreen();
             break;
@@ -169,8 +171,7 @@ function menuControls()
         case "main":
             if (keys[32] && canPressKey) {
                 currentMenuOption = "game"; 
-                audioPlaying = false; 
-                RECUBED_main_menu.pause();
+                handleMusicStop(RECUBED_main_menu);
             }
             setKeyTimeout(32);
             break;

@@ -7,8 +7,6 @@
 var SFX_Playing = false;
 var MUSIC_Playing = false;
 
-var currentMusic = null; // Current music will be set to this variable.
-
 var RECUBED_main_menu = new Audio("assets/ost/CubeDood ReCubed.mp3");
 var RECUBED_settings_menu = new Audio("assets/ost/Meeting with the Cube.mp3");
 var RECUBED_soundTest_menu = new Audio("assets/ost/Sound Test.mp3");
@@ -90,9 +88,9 @@ function handleMusicPlay(music)
     }
 }
 
-function handleMusicStop()
+function handleMusicStop(music)
 {
-    currentMusic.pause();
-    currentMusic.currentTime = 0;
+    music.pause();
+    music.currentTime = 0;
     MUSIC_Playing = false;
 }
