@@ -4,6 +4,9 @@
     This JavaScript file is just full of utility functions that are used to draw things to the screen.
 */
 
+var game_title = new Image();
+game_title.src = 'assets/game/game_title_placeholder.png';
+
 var goal = new Image();
 goal.src = 'assets/level/goal.png';
 
@@ -153,6 +156,8 @@ function drawDebug(elapsed)
     drawText("VelX: " + Math.round(player.xVelocity), 700, 150, 16, 'white');
     drawText("VelY: " + Math.round(player.yVelocity), 700, 180, 16, 'white');
     drawText("Level: " + currentLevel, 700, 210, 16, 'white');    
+    drawText("Jumping: " + player.isJumping, 700, 240, 16, 'white');
+    drawText("Grounded: " + player.isGrounded, 700, 270, 16, 'white');
 }
 
 /*
@@ -165,6 +170,19 @@ function drawUI()
     // Write scores and deaths at the top, with white text with a black border
     drawText("Score: " + player.score, 10, 30, 24, 'white');
     drawText("Deaths: " + player.deaths, 10, 60, 24, 'white');
+}
+
+/* 
+    drawMenuPlayIcon
+    Draws a arrow icon thats the player for the different menus.
+*/
+function drawMenuPlayerIcon(x, y, w, h) {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(x*w + w/4, y*h + h/4, w/2, h/2);
+
+    ctx.fillStyle = 'black';
+    ctx.fillRect(x*w + w/8 + 8, y*h + h/4 + 8, 8, 8);
+    ctx.fillRect(x*w + w/8 + 24, y*h + h/4 + 8, 8, 8);
 }
 
 function drawForeground()
@@ -297,24 +315,43 @@ function drawStartScreen()
 function drawMainMenu()
 {
     drawBackground('orange');
-    drawText("CubeDood: ReCubed", canvas.width/2 - 100, 100, 24, 'black');
+    drawImageToScreen(game_title, canvas.width/2 - 400, 0, 450, 100);
+    drawText("ReCubed", canvas.width/2 - 65, 115, 24, 'black')
     
     // Draw a button that says "Start"
-    drawText("Start", canvas.width/2 - 100, 200, 24, 'black');
+    drawText("Start", canvas.width/2 - 375, 200, 24, 'black');
     // Put a rectangle around the button
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(canvas.width/2 - 125, 175, 150, 50);
+    ctx.strokeRect(canvas.width/2 - 400, 175, 150, 50);
 
     // Draw a button that says "Options"
-    drawText("Options", canvas.width/2 - 100, 300, 24, 'black');
+    drawText("Options", canvas.width/2 - 375, 300, 24, 'black');
     // Put a rectangle around the button
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(canvas.width/2 - 125, 275, 150, 50);
+    ctx.strokeRect(canvas.width/2 - 400, 275, 150, 50);
 
     // Draw a button that says "Credits"
-    drawText("Credits", canvas.width/2 - 100, 400, 24, 'black');
+    drawText("Credits", canvas.width/2 - 375, 400, 24, 'black');
     // Put a rectangle around the button
     ctx.strokeStyle = 'black';
-    ctx.strokeRect(canvas.width/2 - 125, 375, 150, 50);
+    ctx.strokeRect(canvas.width/2 - 400, 375, 150, 50);
+}
 
+/*
+    drawMainMenuOptions
+    Draws the options for the main menu.
+*/
+function drawMainMenuOptions(menuOption)
+{
+    switch (menuOption) {
+        case "start":
+            drawMenuPlayerIcon(2.2, 2.6, 64, 64);
+            break;
+        case "options":
+            drawMenuPlayerIcon(2.2, 4.2, 64, 64);
+            break;
+        case "credits":
+            drawMenuPlayerIcon(2.2, 5.8, 64, 64);
+            break;
+    }
 }

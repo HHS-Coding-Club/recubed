@@ -9,6 +9,8 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
+var video = document.getElementById('video');
+
 const game = {
     name: "CubeDood: ReCubed", // Project ReCubed
     version: {
@@ -22,6 +24,8 @@ const game = {
 canvas.width = 800;
 canvas.height = 640;
 
+var easterEggWorking = false;
+
 var lastUpdateTime = performance.now();
 var deltaTime = 0;
 var fpsInterval = 1000 / 60;
@@ -34,6 +38,8 @@ var currentPlayableCharacter = "CubeTop"; // CubeDood, CubeTop, Cubie, and CubeB
 
 var canPressKey = true;
 var audioPlaying = false;
+
+var currentMainMenuOption = 0;
 
 var debugMode = true;
 
@@ -139,9 +145,24 @@ function menuUpdate()
             drawStartScreen();
             break;
         case "main":
-            drawMainMenu();
-            
-            handleMusicPlay(RECUBED_main_menu);
+            if (!easterEggWorking) {
+                drawMainMenu();
+                switch (currentMainMenuOption) {
+                    case 0:
+                        drawMainMenuOptions("start");
+                        break;
+                    case 1:
+                        drawMainMenuOptions("options");
+                        break;
+                    case 2:
+                        drawMainMenuOptions("credits");
+                        break;
+                }
+
+                handleMusicPlay(RECUBED_main_menu);
+            } else {
+                handleMusicStop(RECUBED_main_menu);
+            }
 
             break;
         case "game":
@@ -173,6 +194,22 @@ function menuControls()
                 currentMenuOption = "game"; 
                 handleMusicStop(RECUBED_main_menu);
             }
+
+            // If up or w is pressed 
+            if (canPressKey) {
+                if (keys[38] || keys[87]) {
+                    currentMainMenuOption--;
+                    if (currentMainMenuOption < 0) currentMainMenuOption = 2;
+                    setKeyTimeout(38);
+                } else if (keys[40] || keys[83]) {
+                    currentMainMenuOption++;
+                    if (currentMainMenuOption > 2) currentMainMenuOption = 0;
+                    setKeyTimeout(40);
+                }
+            }
+
+            easterEgg();
+
             setKeyTimeout(32);
             break;
         case "game":
@@ -201,6 +238,27 @@ function startLevel(level)
     }
 
     levelHasStarted = true;
+}
+
+function easterEgg() {
+    // See if the player is holding J and K at the same time
+    if (keys[74] && keys[75]) {
+        if (!easterEggWorking) {
+            easterEggWorking = true;
+            // play the video
+            video.style.display = "block";
+            video.currentTime = 0;
+            video.play();
+            canvas.style.display = "none";
+
+            setTimeout(function() {
+                video.style.display = "none";
+                video.pause();
+                canvas.style.display = "block";
+                easterEggWorking = false;
+            }, 25500);
+        }
+    }
 }
 
 function setKeyTimeout(keyPressed)

@@ -8,3 +8,9 @@ canvas {
 body {
     background-color:black;
 }
+
+/* Hide all videos */
+video {
+    display: none;
+    margin: auto;
+}
