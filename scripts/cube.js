@@ -92,22 +92,22 @@ function draw()
                     switch (menuSelection)
                     {
                         case 0:
-                            graphics_createLayeredButton(300, 200, 200, 50, "Play", "black", "white", "orange");
-                            graphics_createLayeredButton(300, 280, 200, 50, "Editor", "orange", "black", "black");
-                            graphics_createLayeredButton(300, 360, 200, 50, "Options", "orange", "black", "black");
-                            graphics_createMiniCubeDood(250, 210, 32, 32, "right");
+                            graphics_drawLayeredButton(300, 200, 200, 50, "Play", "black", "white", "orange");
+                            graphics_drawLayeredButton(300, 280, 200, 50, "Editor", "orange", "black", "black");
+                            graphics_drawLayeredButton(300, 360, 200, 50, "Options", "orange", "black", "black");
+                            graphics_drawCubeDood(250, 210, 32, 32, "right");
                             break;
                         case 1:
-                            graphics_createLayeredButton(300, 200, 200, 50, "Play", "orange", "black", "black");
-                            graphics_createLayeredButton(300, 280, 200, 50, "Editor", "black", "white", "orange");
-                            graphics_createLayeredButton(300, 360, 200, 50, "Options", "orange", "black", "black");
-                            graphics_createMiniCubeDood(250, 290, 32, 32, "right");
+                            graphics_drawLayeredButton(300, 200, 200, 50, "Play", "orange", "black", "black");
+                            graphics_drawLayeredButton(300, 280, 200, 50, "Editor", "black", "white", "orange");
+                            graphics_drawLayeredButton(300, 360, 200, 50, "Options", "orange", "black", "black");
+                            graphics_drawCubeDood(250, 290, 32, 32, "right");
                             break;
                         case 2:
-                            graphics_createLayeredButton(300, 200, 200, 50, "Play", "orange", "black", "black");
-                            graphics_createLayeredButton(300, 280, 200, 50, "Editor", "orange", "black", "black");
-                            graphics_createLayeredButton(300, 360, 200, 50, "Options", "black", "white", "orange");
-                            graphics_createMiniCubeDood(250, 370, 32, 32, "right");
+                            graphics_drawLayeredButton(300, 200, 200, 50, "Play", "orange", "black", "black");
+                            graphics_drawLayeredButton(300, 280, 200, 50, "Editor", "orange", "black", "black");
+                            graphics_drawLayeredButton(300, 360, 200, 50, "Options", "black", "white", "orange");
+                            graphics_drawCubeDood(250, 370, 32, 32, "right");
                             break;
                     }
                     break;
@@ -206,7 +206,7 @@ function graphics_drawGameLogo(x, y)
     graphics_drawText("black", "ReCubed", x + 260, y + 135, "40px", "Helvetica");
 }
 
-function graphics_createButton(x, y, w, h, text, color, textColor, strokeColor)
+function graphics_drawButton(x, y, w, h, text, color, textColor, strokeColor)
 {
     ctx.fillStyle = color;
     ctx.fillRect(x, y, w, h);
@@ -219,7 +219,7 @@ function graphics_createButton(x, y, w, h, text, color, textColor, strokeColor)
     ctx.fillText(text, x + (w / 2) - (text.length * 5), y + (h / 2) + 5);
 }
 
-function graphics_createLayeredButton(x, y, w, h, text, color, textColor, strokeColor)
+function graphics_drawLayeredButton(x, y, w, h, text, color, textColor, strokeColor)
 {
     ctx.fillStyle = "black";
     ctx.fillRect(x + 10, y + 10, w, h);
@@ -238,7 +238,7 @@ function graphics_createLayeredButton(x, y, w, h, text, color, textColor, stroke
     ctx.fillText(text, x + (w / 2) - (text.length * 5), y + (h / 2) + 5);
 }
 
-function graphics_createMiniCubeDood(x, y, w, h, direction)
+function graphics_drawCubeDood(x, y, w, h, direction)
 {
     ctx.fillStyle = "white";
     ctx.fillRect(x, y, w, h);
@@ -282,6 +282,8 @@ function init()
 {
     canvas.width = cube.canWidth;
     canvas.height = cube.canHeight;
+
+    console.log(cube.name + " v" + cube.version + " by " + cube.author);
 
     update();
 }
