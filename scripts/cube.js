@@ -43,6 +43,18 @@ logo.src = "assets/game/logo.png";
     Constant & Final Variables
 */
 const keyDelayTime = 150;   // 150ms
+const enableDebug = true;   // Only enable if you know what you're doing
+
+const reallyBadLoadingScreenTips = [
+    "Pro Tip: Hit the space bar to jump",
+    "Hidden Feature: Pressing 'Z' will make you go faster",
+    "Did you know? You can change your costume in the options menu",
+    "Fun Fact: The original CubeDood was made in 2 weeks!",
+    "Did you know? CubeDood is a cube",
+    "Pro Tip: Avoid all spikes!",
+    "Fun Fact: In the original CubeDood, level 15 was the hardest level in the game",
+    "Pro Tip: Alt+F4 will enable cheats"
+]
 
 /*
     Variables
@@ -66,10 +78,10 @@ function update()
 
     if (deltaTime >= fpsInterval)
     {
-        deltaTime = 0;
         graphics_clearCanvas();
         input();
         draw();
+        deltaTime = 0;
     }
 
     lastUpdateTime = currentTime;
@@ -77,6 +89,7 @@ function update()
 
 function draw()
 {
+
     switch (gameState)
     {
         case "menu":
@@ -113,6 +126,12 @@ function draw()
                     break;
             }
             break;
+    }
+
+    if (enableDebug)
+    {
+        graphics_drawText("purple", "FPS: " + Math.round(1 / (deltaTime / 1000)), 10, 20, "20px", "Helvetica");
+        graphics_drawText("purple", "Delta Time: " + deltaTime, 10, 40, "20px", "Helvetica");
     }
 }
 
@@ -204,6 +223,8 @@ function graphics_drawGameLogo(x, y)
 {
     ctx.drawImage(logo, x, y);
     graphics_drawText("black", "ReCubed", x + 260, y + 135, "40px", "Helvetica");
+    graphics_drawCubeDood(x + 440, y+68, 32, 32, "right");
+    graphics_drawCubeTop(x + 504, y + 68, 32, 32, "left");
 }
 
 function graphics_drawButton(x, y, w, h, text, color, textColor, strokeColor)
@@ -266,6 +287,57 @@ function graphics_drawCubeDood(x, y, w, h, direction)
             ctx.fill();
             break;
     }
+}
+
+function graphics_drawCubeTop(x, y, w, h, direction)
+{
+    // CubeTop is just CubeDood with a tophat, and different eyes
+
+    ctx.fillStyle = "white";
+    ctx.fillRect(x, y, w, h);
+
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(x, y, w, h);
+
+    switch (direction) {
+        case "right":
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.moveTo(x + 6, y + 14);
+            ctx.lineTo(x + 10, y + 10);
+            ctx.lineTo(x + 14, y + 14);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(x + 22, y + 14);
+            ctx.lineTo(x + 26, y + 10);
+            ctx.lineTo(x + 30, y + 14);
+            ctx.fill();
+            break;
+        case "left":
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.moveTo(x + 2, y + 14);
+            ctx.lineTo(x + 6, y + 10);
+            ctx.lineTo(x + 10, y + 14);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(x + 18, y + 14);
+            ctx.lineTo(x + 22, y + 10);
+            ctx.lineTo(x + 26, y + 14);
+            ctx.fill();
+            break;
+    }
+
+    ctx.fillStyle = "black";
+    ctx.rect(x + 3, y - 5, 26, 5);
+    ctx.fill();
+    ctx.rect(x + 6, y - 30, 20, 25);
+    ctx.fill();
+    ctx.fillStyle = "gold";
+    ctx.beginPath();
+    ctx.arc(x + 16, y - 5, 10, 0, Math.PI, true);
+    ctx.fill();
+    ctx.closePath();
 }
 
 function utility_setKeyDelay()
