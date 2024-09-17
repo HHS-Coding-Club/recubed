@@ -1,3 +1,12 @@
+/*
+    Game Modes:
+        - Standard "The CubeDood Experience"
+        - Speedrun "Beat the game as fast as possible"
+        - Endless "How long can you last?"
+        - Editor "Create your own levels"
+        - Player "Play other people's levels"
+*/
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -39,11 +48,14 @@ document.addEventListener("keyup", function(event)
 var logo = new Image();
 logo.src = "assets/game/logo.png";
 
+var levelGoalFlag = new Image();
+levelGoalFlag.src = "assets/game/flag.png";
+
 /*
     Constant & Final Variables
 */
-const keyDelayTime = 150;   // 150ms
-const enableDebug = true;   // Only enable if you know what you're doing
+const keyDelayTime = 150;
+const enableDebug = true;
 
 const reallyBadLoadingScreenTips = [
     "Pro Tip: Hit the space bar to jump",
@@ -54,7 +66,7 @@ const reallyBadLoadingScreenTips = [
     "Pro Tip: Avoid all spikes!",
     "Fun Fact: In the original CubeDood, level 15 was the hardest level in the game",
     "Pro Tip: Alt+F4 will enable cheats"
-]
+];
 
 /*
     Variables
@@ -65,7 +77,7 @@ var fpsInterval = 1000 / cube.fps;
 
 var keyDelay = false;
 
-var gameState = "menu";
+var gameState = "load";
 var menuState = "main";
 var menuSelection = 0;
 
@@ -92,6 +104,14 @@ function draw()
 
     switch (gameState)
     {
+        case "load":
+            graphics_drawBackground("black");
+            graphics_drawText("white", "Loading...", 10, 20, "20px", "Helvetica");
+            break;
+        case "pressStart":
+            graphics_drawBackground("black");
+            graphics_drawText("white", "Press Enter to Start", 10, 20, "20px", "Helvetica");
+            break;
         case "menu":
             graphics_drawMenuBackground();
             
@@ -105,21 +125,21 @@ function draw()
                     switch (menuSelection)
                     {
                         case 0:
-                            graphics_drawLayeredButton(300, 200, 200, 50, "Play", "black", "white", "orange");
+                            graphics_drawLayeredButton(300, 200, 200, 50, "Play", "black", "orange", "orange");
                             graphics_drawLayeredButton(300, 280, 200, 50, "Editor", "orange", "black", "black");
                             graphics_drawLayeredButton(300, 360, 200, 50, "Options", "orange", "black", "black");
                             graphics_drawCubeDood(250, 210, 32, 32, "right");
                             break;
                         case 1:
                             graphics_drawLayeredButton(300, 200, 200, 50, "Play", "orange", "black", "black");
-                            graphics_drawLayeredButton(300, 280, 200, 50, "Editor", "black", "white", "orange");
+                            graphics_drawLayeredButton(300, 280, 200, 50, "Editor", "black", "orange", "orange");
                             graphics_drawLayeredButton(300, 360, 200, 50, "Options", "orange", "black", "black");
                             graphics_drawCubeDood(250, 290, 32, 32, "right");
                             break;
                         case 2:
                             graphics_drawLayeredButton(300, 200, 200, 50, "Play", "orange", "black", "black");
                             graphics_drawLayeredButton(300, 280, 200, 50, "Editor", "orange", "black", "black");
-                            graphics_drawLayeredButton(300, 360, 200, 50, "Options", "black", "white", "orange");
+                            graphics_drawLayeredButton(300, 360, 200, 50, "Options", "black", "orange", "orange");
                             graphics_drawCubeDood(250, 370, 32, 32, "right");
                             break;
                     }
@@ -141,6 +161,13 @@ function input()
     {
         switch (gameState)
     {
+        case "pressStart":
+            if (keys[13])
+            {
+                gameState = "menu";
+                utility_setKeyDelay();
+            }
+            break;
         case "menu":
             switch (menuState)
             {
@@ -222,6 +249,7 @@ function graphics_drawMenuBackground()
 function graphics_drawGameLogo(x, y)
 {
     ctx.drawImage(logo, x, y);
+    ctx.drawImage(levelGoalFlag, x + 408, y - 10, 32, 32);
     graphics_drawText("black", "ReCubed", x + 260, y + 135, "40px", "Helvetica");
     graphics_drawCubeDood(x + 440, y+68, 32, 32, "right");
     graphics_drawCubeTop(x + 504, y + 68, 32, 32, "left");
@@ -291,8 +319,6 @@ function graphics_drawCubeDood(x, y, w, h, direction)
 
 function graphics_drawCubeTop(x, y, w, h, direction)
 {
-    // CubeTop is just CubeDood with a tophat, and different eyes
-
     ctx.fillStyle = "white";
     ctx.fillRect(x, y, w, h);
 
@@ -340,6 +366,41 @@ function graphics_drawCubeTop(x, y, w, h, direction)
     ctx.closePath();
 }
 
+/*
+    Graphics Functions for Levels
+*/
+
+function graphics_drawLevel(level)
+{
+    /*
+        This will be implemented in the future!
+
+        But basically, levels are width & height array of tiles / 32.
+        So since the width is 800, and the height is 640, the level would be 25x20.
+
+        This will be tied in with the utility function "parseLevel" which will take a level string and convert it into a 2D array of tiles.
+    */ 
+}
+
+function graphics_drawTile(x, y, w, h, color)
+{
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+}
+
+function graphics_drawTileWithBorder(x, y, w, h, color, borderColor)
+{
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, h);
+
+    ctx.strokeStyle = borderColor;
+    ctx.strokeRect(x, y, w, h);
+}
+
+/*
+    Utility Functions
+*/
+
 function utility_setKeyDelay()
 {
     keys = [];
@@ -350,6 +411,20 @@ function utility_setKeyDelay()
     }, keyDelayTime);
 }
 
+function utility_parseLevel()
+{
+    /*
+        Level strings will be formatted as follows:
+
+        "levelname,levelauthor,songid,bgcolor,0,0..."
+
+        First 2 are level name and author
+        3rd is song id
+        4th is background color
+        The rest are the level tiles, which are integers that represent the tile type.
+    */
+}
+
 function init()
 {
     canvas.width = cube.canWidth;
@@ -358,6 +433,14 @@ function init()
     console.log(cube.name + " v" + cube.version + " by " + cube.author);
 
     update();
+
+    gameState = "loading";
+
+    /*
+        Any loading code goes here.
+    */
+
+    gameState = "pressStart";
 }
 
 init();
