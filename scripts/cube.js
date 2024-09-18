@@ -15,7 +15,7 @@ const cube = {
     name: "CubeDood: ReCubed",
     author: "Colack",
     version: "0.0.1",
-    fps: 60,
+    fps: 144,
 
     canWidth: 800,
     canHeight: 640
@@ -41,6 +41,7 @@ var player = {
     speed: 4,
     slowSpeed: 1,
     highSpeed: 6
+    defSpeed: 4
 
 }
 
@@ -108,6 +109,7 @@ var keyDelay = false;
 
 var gameState = "load";
 var menuState = "main";
+var gameMode = "standard";
 var menuSelection = 0;
 
 function update()
@@ -175,6 +177,13 @@ function draw()
                     break;
             }
             break;
+        case "game":
+            switch (gameMode)
+            {
+                case "standard":
+                    player_draw();
+                    break;
+            }
     }
 
     if (enableDebug)
@@ -222,6 +231,26 @@ function input()
                         }
                         utility_setKeyDelay();
                     }
+
+                    if (keys[keyBinds.enter])
+                    {
+                        switch (menuSelection)
+                        {
+                            case 0:
+                                gameState = "game";
+                                gameMode = "standard";
+                                utility_setKeyDelay();
+                                break;
+                        }
+                    }
+                    break;
+            }
+            break;
+        case "game":
+            switch (gameMode)
+            {
+                case "standard":
+                    player_update();
                     break;
             }
             break;
@@ -462,7 +491,6 @@ function player_update()
     player_handleJump();
     player_handleMovement()
     player_handleCollision();
-    player_draw();
 }
 
 function player_handleJump()
@@ -475,6 +503,75 @@ function player_handleJump()
         player.vY = -player.jumpHeight * 2;
         player.direction = player.direction == "right" ? "upright" : "upleft";
     }
+}
+
+function player_handleMovement()
+{
+    if (keys[keyBinds.z])
+    {
+        player.speed = player.highSpeed;
+    } else if (keys[keyBinds.x])
+    {
+        player.speed = player.slowSpeed;
+    } else {
+        player.speed = player.defSpeed;
+    }
+
+    if (keys[keyBinds.left] || keys[keyBinds.a] && player.vX > -player.speed)
+    {
+        player.vX--;
+        player.direction = player.isJumping ? "upleft" : "left";
+    }
+
+    if (keys[keyBinds.right] || keys[keyBinds.d] && player.vX < player.speed)
+    {
+        player.vX++;
+        player.direction = player.isJumping ? "upright" : "right";
+    }
+}
+
+function player_handleCollision()
+{
+    /*
+        Gravity, Friction, and Collision (in that order)
+    */
+
+    player.vY += player.gravity;
+    player.vX *= player.friction;
+
+    player.x += player.vX;
+    player.y += player.vY;
+
+    if (player.y + player.h > cube.canHeight)
+    {
+        player.y = cube.canHeight - player.h;
+        player.isJumping = false;
+        player.isGrounded = true;
+        player.vY = 0;
+    }
+
+    if (player.x + player.w > cube.canWidth)
+    {
+        player.x = cube.canWidth - player.w;
+        player.vX = 0;
+    }
+
+    if (player.x < 0)
+    {
+        player.x = 0;
+        player.vX = 0;
+    }
+
+    if (player.y < 0)
+    {
+        player.y = 0;
+        player.vY = 0;
+    }
+}
+
+function player_draw()
+{
+    graphics_drawCubeDood(player.x, player.y, player.w, player.h, player.direction);
 }
 
 function init()
