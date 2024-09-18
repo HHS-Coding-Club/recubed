@@ -5,6 +5,7 @@
         - Endless "How long can you last?"
         - Editor "Create your own levels"
         - Player "Play other people's levels"
+        - Multiplayer "Play with friends"
 */
 
 const canvas = document.getElementById('canvas');
@@ -25,9 +26,22 @@ var player = {
     y: 0,
     w: 32,
     h: 32,
+    vX: 0,
+    vY: 0,
+
     costume: "cd",
-    speed: 3,
-    direction: "right"
+    direction: "right",
+
+    isJumping: false,
+    isGrounded: false,
+
+    jumpHeight: 3.3,
+    gravity: 0.215,
+    friction: 0.92,
+    speed: 4,
+    slowSpeed: 1,
+    highSpeed: 6
+
 }
 
 var keys = [];
@@ -67,6 +81,21 @@ const reallyBadLoadingScreenTips = [
     "Fun Fact: In the original CubeDood, level 15 was the hardest level in the game",
     "Pro Tip: Alt+F4 will enable cheats"
 ];
+
+const keyBinds = {
+    "up": 38,
+    "down": 40,
+    "left": 37,
+    "right": 39,
+    "w": 87,
+    "s": 83,
+    "a": 65,
+    "d": 68,
+    "space": 32,
+    "z": 90,
+    "x": 88,
+    "enter": 13
+}
 
 /*
     Variables
@@ -162,7 +191,7 @@ function input()
         switch (gameState)
     {
         case "pressStart":
-            if (keys[13])
+            if (keys[keyBinds.enter])
             {
                 gameState = "menu";
                 utility_setKeyDelay();
@@ -172,7 +201,7 @@ function input()
             switch (menuState)
             {
                 case "main":
-                    if (keys[38] && !keys[13])
+                    if (keys[keyBinds.up] && !keys[keyBinds.enter])
                     {
                         if (menuSelection > 0)
                         {
@@ -183,7 +212,7 @@ function input()
                         utility_setKeyDelay();
                     }
 
-                    if (keys[40] && !keys[13])
+                    if (keys[keyBinds.down] && !keys[keyBinds.enter])
                     {
                         if (menuSelection < 2)
                         {
@@ -249,7 +278,7 @@ function graphics_drawMenuBackground()
 function graphics_drawGameLogo(x, y)
 {
     ctx.drawImage(logo, x, y);
-    ctx.drawImage(levelGoalFlag, x + 408, y - 10, 32, 32);
+    ctx.drawImage(levelGoalFlag, x + 408, y - 13, 32, 32);
     graphics_drawText("black", "ReCubed", x + 260, y + 135, "40px", "Helvetica");
     graphics_drawCubeDood(x + 440, y+68, 32, 32, "right");
     graphics_drawCubeTop(x + 504, y + 68, 32, 32, "left");
@@ -423,6 +452,29 @@ function utility_parseLevel()
         4th is background color
         The rest are the level tiles, which are integers that represent the tile type.
     */
+}
+
+/*
+    Player Functions
+*/
+function player_update()
+{
+    player_handleJump();
+    player_handleMovement()
+    player_handleCollision();
+    player_draw();
+}
+
+function player_handleJump()
+{
+    if (keys[keyBinds.space] || keys[keyBinds.up] || keys[keyBinds.w] && !player.isJumping)
+    {
+        player.isJumping = true;
+        player.isGrounded = false;
+
+        player.vY = -player.jumpHeight * 2;
+        player.direction = player.direction == "right" ? "upright" : "upleft";
+    }
 }
 
 function init()

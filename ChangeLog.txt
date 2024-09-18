@@ -1,1 +1,0 @@
-This is the official CubeDood: ReCubed changelog. Use this if you want to view what's changed over the course of development.
