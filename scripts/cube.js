@@ -40,7 +40,7 @@ var player = {
     friction: 0.92,
     speed: 4,
     slowSpeed: 1,
-    highSpeed: 6
+    highSpeed: 6,
     defSpeed: 4
 
 }
@@ -190,6 +190,7 @@ function draw()
     {
         graphics_drawText("purple", "FPS: " + Math.round(1 / (deltaTime / 1000)), 10, 20, "20px", "Helvetica");
         graphics_drawText("purple", "Delta Time: " + deltaTime, 10, 40, "20px", "Helvetica");
+        console.log(player.isJumping);
     }
 }
 
@@ -495,13 +496,16 @@ function player_update()
 
 function player_handleJump()
 {
-    if (keys[keyBinds.space] || keys[keyBinds.up] || keys[keyBinds.w] && !player.isJumping)
+    if (keys[keyBinds.space] || keys[keyBinds.up] || keys[keyBinds.w])
     {
-        player.isJumping = true;
-        player.isGrounded = false;
+        if (!player.isJumping)
+        {
+            player.isJumping = true;
+            player.isGrounded = false;
 
-        player.vY = -player.jumpHeight * 2;
-        player.direction = player.direction == "right" ? "upright" : "upleft";
+            player.vY = -player.jumpHeight * 2;
+            player.direction = player.direction == "right" ? "upright" : "upleft";
+        }
     }
 }
 
@@ -566,6 +570,12 @@ function player_handleCollision()
     {
         player.y = 0;
         player.vY = 0;
+    }
+
+    if (player.y > 608)
+    {
+        player.isGrounded = false;
+        player.isJumping = true;
     }
 }
 
