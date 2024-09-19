@@ -112,6 +112,11 @@ var menuState = "main";
 var gameMode = "standard";
 var menuSelection = 0;
 
+var levelHasLoaded = false;
+var levelData = "";
+var level = [];
+var levelNum = 0;
+
 function update()
 {
     requestAnimationFrame(update);
@@ -373,6 +378,24 @@ function graphics_drawCubeDood(x, y, w, h, direction)
             ctx.arc(x + 20, y + 14, 2.5, 0, 2 * Math.PI);
             ctx.fill();
             break;
+        case "upleft":
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.arc(x + 4, y + 4, 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x + 20, y + 4, 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+            break;
+        case "upright":
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.arc(x + 12, y + 4, 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x + 28, y + 4, 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+            break;
     }
 }
 
@@ -521,16 +544,22 @@ function player_handleMovement()
         player.speed = player.defSpeed;
     }
 
-    if (keys[keyBinds.left] || keys[keyBinds.a] && player.vX > -player.speed)
+    if (keys[keyBinds.left] || keys[keyBinds.a])
     {
-        player.vX--;
-        player.direction = player.isJumping ? "upleft" : "left";
+        if (player.vX > -player.speed)
+        {
+            player.vX--;
+            player.direction = player.isJumping ? "upleft" : "left";
+        }
     }
 
-    if (keys[keyBinds.right] || keys[keyBinds.d] && player.vX < player.speed)
+    if (keys[keyBinds.right] || keys[keyBinds.d])
     {
-        player.vX++;
-        player.direction = player.isJumping ? "upright" : "right";
+        if (player.vX < player.speed)
+        {
+            player.vX++;
+            player.direction = player.isJumping ? "upright" : "right";
+        }
     }
 }
 
@@ -545,14 +574,6 @@ function player_handleCollision()
 
     player.x += player.vX;
     player.y += player.vY;
-
-    if (player.y + player.h > cube.canHeight)
-    {
-        player.y = cube.canHeight - player.h;
-        player.isJumping = false;
-        player.isGrounded = true;
-        player.vY = 0;
-    }
 
     if (player.x + player.w > cube.canWidth)
     {
@@ -572,16 +593,101 @@ function player_handleCollision()
         player.vY = 0;
     }
 
-    if (player.y > 608)
+    if (player.y >= cube.canHeight - player.h)
+    {
+        player.y = cube.canHeight - player.h;
+        player.isJumping = false;
+        player.isGrounded = true;
+        player.vY = 0;
+        
+        if (player.direction == "upleft")
+        {
+            player.direction = "left";
+        } else if (player.direction == "upright")
+        {
+            player.direction = "right";
+        }
+    }
+
+    if (player.y + player.h > cube.canHeight)
+    {
+        player.y = cube.canHeight - player.h;
+        player.vY = 0;
+    }
+
+    if (player.y < cube.canHeight - player.h)
     {
         player.isGrounded = false;
         player.isJumping = true;
+    }
+
+    player_handleLevelCollision();
+}
+
+function player_handleLevelCollision(levelArray)
+{
+    for (var x = 0; x < levelArray.length; x++)
+    {
+        for (var y = 0; y < levelArray[x].length; y++)
+        {
+            switch (levelArray[x][y])
+            {
+
+            }
+        }
     }
 }
 
 function player_draw()
 {
-    graphics_drawCubeDood(player.x, player.y, player.w, player.h, player.direction);
+    switch (player.costume)
+    {
+        case "cd":
+            graphics_drawCubeDood(player.x, player.y, player.w, player.h, player.direction);
+            break;
+        case "ct":
+            graphics_drawCubeTop(player.x, player.y, player.w, player.h, player.direction);
+            break;
+        default:
+            graphics_drawCubeDood(player.x, player.y, player.w, player.h, player.direction);
+            break;
+    }
+}
+
+/*
+    Level Functions
+*/
+
+function level_collisionSide(player, tile)
+{
+    var deltaX = player.x + player.w / 2 - (tile.x + tile.w / 2);
+    var deltaY = player.y + player.h / 2 - (tile.y + tile.h / 2);
+
+    if (Math.abs(deltaX) > Math.abs(deltaY))
+    {
+        return deltaX > 0 ? "right" : "left";
+    } else {
+        return deltaY > 0 ? "bottom" : "top";
+    }
+}
+
+/*
+    Editor Functions (help me)
+*/
+
+function editor_update()
+{
+    
+}
+
+function editor_draw()
+{
+
+}
+
+function editor_input()
+{
+    
 }
 
 function init()
