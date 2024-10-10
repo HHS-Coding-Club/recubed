@@ -195,7 +195,7 @@ function draw()
     {
         graphics_drawText("purple", "FPS: " + Math.round(1 / (deltaTime / 1000)), 10, 20, "20px", "Helvetica");
         graphics_drawText("purple", "Delta Time: " + deltaTime, 10, 40, "20px", "Helvetica");
-        console.log(player.isJumping);
+        graphics_drawText("purple", "Can Jump: " + player.isGrounded, 10, 60, "20px", "Helvetica");
     }
 }
 
@@ -621,7 +621,7 @@ function player_handleCollision()
         player.isJumping = true;
     }
 
-    player_handleLevelCollision();
+    player_handleLevelCollision(level);
 }
 
 function player_handleLevelCollision(levelArray)
