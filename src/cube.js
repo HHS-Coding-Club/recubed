@@ -1,11 +1,6 @@
 /*
-    Game Modes:
-        - Standard "The CubeDood Experience"
-        - Speedrun "Beat the game as fast as possible"
-        - Endless "How long can you last?"
-        - Editor "Create your own levels"
-        - Player "Play other people's levels"
-        - Multiplayer "Play with friends"
+    This file is deprecated, and will be removed in the future.
+    It is only here for reference while we move to typescript.
 */
 
 const canvas = document.getElementById('canvas');
