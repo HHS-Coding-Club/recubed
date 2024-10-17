@@ -3,7 +3,7 @@
  * @param context The canvas context to clear
  */
 function CGL_clearCanvas(context: CanvasRenderingContext2D): void {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height)
 }
 
 /**
@@ -11,9 +11,12 @@ function CGL_clearCanvas(context: CanvasRenderingContext2D): void {
  * @param context The canvas context to change the background color of
  * @param color The color to change the background to, in HEX format
  */
-function CGL_drawBackground(context: CanvasRenderingContext2D, color: string): void {
-    context.fillStyle = color;
-    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+function CGL_drawBackground(
+  context: CanvasRenderingContext2D,
+  color: string,
+): void {
+  context.fillStyle = color
+  context.fillRect(0, 0, context.canvas.width, context.canvas.height)
 }
 
 /**
@@ -25,9 +28,16 @@ function CGL_drawBackground(context: CanvasRenderingContext2D, color: string): v
  * @param height The height of the rectangle
  * @param color The color of the rectangle, in HEX format
  */
-function CGL_drawRectangle(context: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, color: string): void {
-    context.fillStyle = color;
-    context.fillRect(x, y, width, height);
+function CGL_drawRectangle(
+  context: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  color: string,
+): void {
+  context.fillStyle = color
+  context.fillRect(x, y, width, height)
 }
 
 /**
@@ -39,24 +49,39 @@ function CGL_drawRectangle(context: CanvasRenderingContext2D, x: number, y: numb
  * @param font The font of the text
  * @param color The color of the text, in HEX format
  */
-function CGL_drawFont(context: CanvasRenderingContext2D, text: string, x: number, y: number, font: string, color: string): void {
-    context.fillStyle = color;
-    context.font = font;
-    context.fillText(text, x, y);
+function CGL_drawFont(
+  context: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  font: string,
+  color: string,
+): void {
+  context.fillStyle = color
+  context.font = font
+  context.fillText(text, x, y)
 }
 
 /**
  * Draws a rectangle outline on the canvas
- * @param context 
- * @param x 
- * @param y 
- * @param width 
- * @param height 
- * @param color 
- * @param lineWidth 
+ * @param context
+ * @param x
+ * @param y
+ * @param width
+ * @param height
+ * @param color
+ * @param lineWidth
  */
-function CGL_drawRectangleOutline(context: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, color: string, lineWidth: number): void {
-    context.strokeStyle = color;
-    context.lineWidth = lineWidth;
-    context.strokeRect(x, y, width, height);
+function CGL_drawRectangleOutline(
+  context: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  color: string,
+  lineWidth: number,
+): void {
+  context.strokeStyle = color
+  context.lineWidth = lineWidth
+  context.strokeRect(x, y, width, height)
 }

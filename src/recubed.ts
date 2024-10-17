@@ -64,28 +64,33 @@ var player: {
   defaultSpeed: 4,
 }
 
-const keyDelayTime: number = 150;
+const keyDelayTime: number = 150
 
-const debug: { fps: boolean, deltaTime: boolean, canJump: boolean, gameState: boolean } = {
+const debug: {
+  fps: boolean
+  deltaTime: boolean
+  canJump: boolean
+  gameState: boolean
+} = {
   fps: false,
   deltaTime: false,
   canJump: false,
-  gameState: false 
+  gameState: false,
 }
 
 const keyBinds: { [key: string]: number } = {
-  "up": 38,
-  "down": 40,
-  "left": 37,
-  "right": 39,
-  "w": 87,
-  "s": 83,
-  "a": 65,
-  "d": 68,
-  "space": 32,
-  "z": 90,
-  "x": 88,
-  "enter": 13,
+  up: 38,
+  down: 40,
+  left: 37,
+  right: 39,
+  w: 87,
+  s: 83,
+  a: 65,
+  d: 68,
+  space: 32,
+  z: 90,
+  x: 88,
+  enter: 13,
 }
 
 var keys = [] as boolean[]
@@ -320,25 +325,25 @@ const AUDIO_songlist: {
     file: 'assets/ost/The Second Dimention.wav',
     game: 'CubeDood: ReCubed',
   },
-];
+]
 
 var currentSongId: number = 0
 
 /*
   Runtime Variables
 */
-var lastUpdateTime: number = performance.now();
-var deltaTime: number = 0;
-var fpsInterval: number = 1000 / reCubedSettings.fps;
+var lastUpdateTime: number = performance.now()
+var deltaTime: number = 0
+var fpsInterval: number = 1000 / reCubedSettings.fps
 
-var inKeyDelay: boolean = false;
+var inKeyDelay: boolean = false
 
-var gameState: string = 'load';
-var menuState: string = 'main';
-var gameMode: string = 'standard';
-var menuSelection: number = 0;
+var gameState: string = 'load'
+var menuState: string = 'main'
+var gameMode: string = 'standard'
+var menuSelection: number = 0
 
-var levelHasLoaded: boolean = false;
+var levelHasLoaded: boolean = false
 var levelData: {
   name: string
   author: string
@@ -350,40 +355,36 @@ var levelData: {
   author: '',
   songID: 0,
   backgroundColor: '#000000',
-  levelData: []
+  levelData: [],
 }
 
-var currentLevel: number = 0;
-
+var currentLevel: number = 0
 
 /*
   Game Functions
 */
-function update()
-{
-  requestAnimationFrame(update);
+function update() {
+  requestAnimationFrame(update)
 
-  var currentTime: number = performance.now();
-  deltaTime = currentTime - lastUpdateTime;
+  var currentTime: number = performance.now()
+  deltaTime = currentTime - lastUpdateTime
 
-  if (deltaTime >= fpsInterval)
-  {
-    draw();
-    deltaTime = 0;
+  if (deltaTime >= fpsInterval) {
+    draw()
+    deltaTime = 0
   }
 
-  lastUpdateTime = currentTime;
+  lastUpdateTime = currentTime
 }
 
-function draw()
-{
-
-}
-
+function draw() {}
 
 function init() {
   IMAGE_logo.src = 'assets/game/logo.png'
   IMAGE_goal.src = 'assets/game/goal.png'
+
+  canvas.width = reCubedSettings.canWidth
+  canvas.height = reCubedSettings.canHeight
 }
 
-init();
+init()

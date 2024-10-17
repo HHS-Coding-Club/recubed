@@ -4,14 +4,18 @@
   "description": "package.json for recubed cleanup",
   "main": "index.js",
   "scripts": {
-    "build": "prettier --write ./src/**/*.ts && tsc ./src/**/*.ts --outDir dist"
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && prettier --write ./src/**/*.ts && npx tsc ./src/*.ts --outDir ./dist && mkdir -p ./dist/js && mkdir -p ./dist/css && mv ./dist/*.js ./dist/js/ && node ./dist/js/generateHTML.js && node ./dist/js/generateCSS.js && rm ./dist/js/generateHTML.js && rm ./dist/js/generateCSS.js"
   },
   "author": "colack",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "typescript": "^5.6.3"
+    "@types/node": "^22.7.6",
+    "typescript": "^5.6.3",
+    "prettier": "^3.3.3"
   },
   "dependencies": {
-    "prettier": "^3.3.3"
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
   }
 }
