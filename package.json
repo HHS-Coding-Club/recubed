@@ -1,0 +1,14 @@
+{
+  "name": "recubed-scripts",
+  "version": "1.0.0",
+  "description": "package.json for recubed cleanup",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc src/cube.ts --outDir dist"
+  },
+  "author": "colack",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
