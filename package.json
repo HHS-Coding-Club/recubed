@@ -15,7 +15,7 @@
     "rm-html": "rm ./dist/js/generateHTML.js",
     "rm-css": "rm ./dist/js/generateCSS.js",
     "cp-assets": "cp -r ./assets ./dist/",
-    "build": "npm run clean && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run generate-html && npm run generate-css && npm run rm-html && npm run rm-css && npm run cp-assets"
+    "build": "npm run clean && npm run prettier && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run generate-html && npm run generate-css && npm run rm-html && npm run rm-css && npm run cp-assets"
   },
   "author": "colack",
   "license": "GPL-3.0-only",

@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as path from 'path'
+import * as fs from 'fs';
+import * as path from 'path';
 
 const html = `
 <!DOCTYPE html>
@@ -14,11 +14,12 @@ const html = `
     <canvas id="canvas" width="800" height="640"></canvas>
 </body>
 <script src="js/graphics.js"></script>
+<script src="js/utility.js"></script>
 <script src="js/recubed.js"></script>
 </html>
-`
+`;
 
-const outputPath = path.resolve(__dirname, '../index.html') // Ensure this path is correct
-fs.writeFileSync(outputPath, html)
+const outputPath = path.resolve(__dirname, '../index.html'); // Ensure this path is correct
+fs.writeFileSync(outputPath, html);
 
-console.log('HTML file generated at:', outputPath)
+console.log('HTML file generated at:', outputPath);

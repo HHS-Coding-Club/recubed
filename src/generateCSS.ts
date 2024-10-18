@@ -1,5 +1,5 @@
-import * as fs from 'fs'
-import * as path from 'path'
+import * as fs from 'fs';
+import * as path from 'path';
 
 const html = `
 canvas {
@@ -12,9 +12,9 @@ canvas {
 body {
     background-color:black;
 }
-`
+`;
 
-const outputPath = path.resolve(__dirname, '../css/recubed.css') // Ensure this path is correct
-fs.writeFileSync(outputPath, html)
+const outputPath = path.resolve(__dirname, '../css/recubed.css'); // Ensure this path is correct
+fs.writeFileSync(outputPath, html);
 
-console.log('CSS file generated at:', outputPath)
+console.log('CSS file generated at:', outputPath);
