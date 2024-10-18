@@ -1,0 +1,32 @@
+# This GitHub Action will go to the ./.version file and increment the version number by 1
+# and then commit the change to the repository.
+
+name: Increment Version
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  increment_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Increment Version
+        run: |
+          version=$(cat .version)
+          echo $((version + 1)) > .version
+          git config --global user.email "
+          git config --global user.name "GitHub Actions"
+          git add .version
+          git commit -m "Increment version number"
+          git push
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
