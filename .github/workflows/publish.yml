@@ -1,9 +1,7 @@
 name: Publish Build
 
 on:
-  push:
-    paths:
-      - .version
+    workflow_dispatch:
 
 jobs:
   build:
