@@ -1,7 +1,9 @@
 name: Publish Build
 
 on:
-  workflow_dispatch: # This allows the action to be run manually
+  push:
+    paths:
+      - .version
 
 jobs:
   build:
@@ -22,11 +24,19 @@ jobs:
       - name: Run build
         run: npm run build
 
+      - name: Get version from .version file
+        id: get_version
+        run: echo "VERSION=$(cat .version)" >> $GITHUB_ENV
+
+      - name: Zip the dist directory
+        run: |
+          zip -r "${{ env.VERSION }}.zip" ./dist
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: 'v1.0.0' # Change this to your desired tag name or use a dynamic value
-          files: ./dist/**/*
+          tag_name: "${{ env.VERSION }}" # Use the version from the file as the tag name
+          files: "${{ env.VERSION }}.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.CUBEDOOD_TOKEN }}
