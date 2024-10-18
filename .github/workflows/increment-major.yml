@@ -3,6 +3,9 @@ name: Increment Major Version
 on:
     workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   increment-major:
     runs-on: ubuntu-latest

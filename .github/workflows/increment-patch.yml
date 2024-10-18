@@ -3,6 +3,9 @@ name: Increment Patch Version
 on:
     workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   increment-patch:
     runs-on: ubuntu-latest
