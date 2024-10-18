@@ -8,13 +8,13 @@ const html = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CubeDood: ReCubed</title>
-    <link rel="stylesheet" href="styles/cube.css">
+    <link rel="stylesheet" href="css/recubed.css">
 </head>
 <body>
     <canvas id="canvas" width="800" height="640"></canvas>
 </body>
-<script src="js/recubed.js"></script>
 <script src="js/graphics.js"></script>
+<script src="js/recubed.js"></script>
 </html>
 `
 

@@ -377,7 +377,14 @@ function update() {
   lastUpdateTime = currentTime
 }
 
-function draw() {}
+function draw() {
+  switch (gameState) {
+    case 'load':
+      CGL_drawBackground(ctx, '#000000')
+      CGL_drawText(ctx, 'Loading...', 10, 20, '20px Helvetica', '#FFFFFF')
+      break
+  }
+}
 
 function init() {
   IMAGE_logo.src = 'assets/game/logo.png'
@@ -385,6 +392,8 @@ function init() {
 
   canvas.width = reCubedSettings.canWidth
   canvas.height = reCubedSettings.canHeight
+
+  draw()
 }
 
 init()

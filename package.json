@@ -5,7 +5,17 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build": "npm run clean && prettier --write ./src/**/*.ts && npx tsc ./src/*.ts --outDir ./dist && mkdir -p ./dist/js && mkdir -p ./dist/css && mv ./dist/*.js ./dist/js/ && node ./dist/js/generateHTML.js && node ./dist/js/generateCSS.js && rm ./dist/js/generateHTML.js && rm ./dist/js/generateCSS.js"
+    "prettier": "prettier --write ./src/**/*.ts",
+    "tsc-build": "npx tsc ./src/*.ts --outDir ./dist",
+    "mkdir-js": "mkdir -p ./dist/js",
+    "mkdir-css": "mkdir -p ./dist/css",
+    "mv-js": "mv ./dist/*.js ./dist/js/",
+    "generate-html": "node ./dist/js/generateHTML.js",
+    "generate-css": "node ./dist/js/generateCSS.js",
+    "rm-html": "rm ./dist/js/generateHTML.js",
+    "rm-css": "rm ./dist/js/generateCSS.js",
+    "cp-assets": "cp -r ./assets ./dist/",
+    "build": "npm run clean && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run generate-html && npm run generate-css && npm run rm-html && npm run rm-css && npm run cp-assets"
   },
   "author": "colack",
   "license": "GPL-3.0-only",
