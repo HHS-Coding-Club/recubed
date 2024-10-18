@@ -1,9 +1,7 @@
 name: Increment Minor Version
 
 on:
-  push:
-    branches:
-      - main
+    workflow_dispatch:
 
 jobs:
   increment-minor:

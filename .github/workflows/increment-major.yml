@@ -1,9 +1,7 @@
 name: Increment Major Version
 
 on:
-  push:
-    branches:
-      - main
+    workflow_dispatch:
 
 jobs:
   increment-major:
