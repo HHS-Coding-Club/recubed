@@ -1,0 +1,35 @@
+name: Increment Minor Version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  increment-minor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Read and increment version
+        run: |
+          VERSION_FILE=".version"
+          CURRENT_VERSION=$(cat $VERSION_FILE)
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          MINOR=$((MINOR + 1))
+          PATCH=0
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "$NEW_VERSION" > $VERSION_FILE
+          echo "Version updated to $NEW_VERSION"
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "spencerjack646@gmail.com"
+          git config --local user.name "CubeDood"
+          git add .version
+          git commit -m "Increment minor version to $NEW_VERSION"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUBEDOOD_TOKEN }}

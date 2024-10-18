@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16' # Use your desired Node.js version
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
@@ -36,7 +36,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "${{ env.VERSION }}" # Use the version from the file as the tag name
+          tag_name: "${{ env.VERSION }}"
           files: "${{ env.VERSION }}.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.CUBEDOOD_TOKEN }}
