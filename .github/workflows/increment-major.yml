@@ -31,7 +31,7 @@ jobs:
           git config --local user.email "spencerjack646@gmail.com"
           git config --local user.name "CubeDood"
           git add .version
-          git commit -m "Increment major version to $NEW_VERSION"
+          git commit -m "Increment major version"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.CUBEDOOD_TOKEN }}
