@@ -8,10 +8,9 @@
     "prettier": "prettier --write ./src/*.ts",
     "tsc-build": "npx tsc --outDir ./dist",
     "mkdir-js": "mkdir -p ./dist/js",
-    "mkdir-css": "mkdir -p ./dist/css",
     "mv-js": "mv ./dist/*.js ./dist/js/",
     "cp-assets": "cp -r ./assets ./dist/",
-    "build": "npm run clean && npm run prettier && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run cp-assets",
+    "build": "npm run clean && npm run prettier && npm run tsc-build && npm run mkdir-js && npm run mv-js && npm run cp-assets",
     "start": "node src/webserver.mjs",
     "dev": "npm run build && npm run start"
   },

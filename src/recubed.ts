@@ -407,7 +407,7 @@ function init() {
 
   gameState = 'pressStart';
 
-  draw();
+  update();
 }
 
 init();
