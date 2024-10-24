@@ -1,6 +1,23 @@
-{{#extend "head"}}
-<link rel="stylesheet" href="./css/recubed.css">
-{{/extend}}
-{{#extend "scripts"}}
-<script src="./js/recubed.js"></script>
-{{/extend}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <style>
+        canvas {
+            display: block;
+            margin: auto;
+            border-color:white;
+            border-style:solid;
+        }
+
+        body {
+            background-color:black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+<script type="module" src="dist/js/recubed.js"></script>
+</html>

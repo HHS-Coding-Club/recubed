@@ -4,23 +4,20 @@
   "description": "package.json for recubed cleanup",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "prettier": "prettier --write ./src/**/*.ts",
-    "tsc-build": "npx tsc ./src/*.ts --outDir ./dist",
+    "clean": "rimraf ./dist",
+    "prettier": "prettier --write ./src/*.ts",
+    "tsc-build": "npx tsc --outDir ./dist",
     "mkdir-js": "mkdir -p ./dist/js",
     "mkdir-css": "mkdir -p ./dist/css",
     "mv-js": "mv ./dist/*.js ./dist/js/",
-    "generate-html": "node ./dist/js/generateHTML.js",
-    "generate-css": "node ./dist/js/generateCSS.js",
-    "rm-html": "rm ./dist/js/generateHTML.js",
-    "rm-css": "rm ./dist/js/generateCSS.js",
     "cp-assets": "cp -r ./assets ./dist/",
-    "build": "npm run clean && npm run prettier && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run generate-html && npm run generate-css && npm run rm-html && npm run rm-css && npm run cp-assets",
-    "start": "http-server -p 8080 dist --cors",
+    "build": "npm run clean && npm run prettier && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run cp-assets",
+    "start": "node src/webserver.mjs",
     "dev": "npm run build && npm run start"
   },
   "author": "colack",
   "license": "GPL-3.0-only",
+  "type": "module",
   "devDependencies": {
     "@types/node": "^22.7.6",
     "prettier": "^3.3.3",
@@ -28,12 +25,15 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
+    "fastify": "^3.29.5",
+    "fastify-static": "^4.6.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.2.0",
     "handlebars": "^4.7.8",
     "hbs": "^4.2.0",
     "http-server": "^14.1.1",
     "mongoose": "^8.7.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "rimraf": "^6.0.1"
   }
 }

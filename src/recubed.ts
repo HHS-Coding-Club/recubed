@@ -1,9 +1,5 @@
-/*
-    Global variables and settings
-*/
-
-import * as CGL from './graphics'
-import * as utility from './utility'
+import * as CGL from './graphics.js';
+import * as Utility from './utility.js';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -353,6 +349,7 @@ function update() {
   deltaTime = currentTime - lastUpdateTime;
 
   if (deltaTime >= fpsInterval) {
+    console.log('update');
     input();
     draw();
     deltaTime = 0;
@@ -371,6 +368,10 @@ function draw() {
       CGL.drawBackground(ctx, '#000000');
       CGL.drawText(ctx, 'Press Enter to Start', 10, 20, '20px Helvetica', '#FFFFFF');
       break;
+    case 'menu':
+      CGL.drawBackground(ctx, '#000000');
+      CGL.drawText(ctx, 'Menu', 10, 20, '20px Helvetica', '#FFFFFF');
+      break;
     default:
       CGL.drawBackground(ctx, '#000000');
       CGL.drawText(ctx, 'Error: Game State not found.', 10, 20, '20px Helvetica', '#FFFFFF');
@@ -384,7 +385,7 @@ function input() {
       case 'pressStart':
         if (keys[keyBinds.enter]) {
           gameState = 'menu';
-          utility.setKeyDelay(keyDelayTime, inKeyDelay, keys);
+          Utility.setKeyDelay(keyDelayTime, inKeyDelay, keys);
         }
         break;
       default:
@@ -394,10 +395,12 @@ function input() {
 }
 
 function init() {
+  console.log(reCubedSettings.name + ' v' + reCubedSettings.version + ' by ' + reCubedSettings.author);
+
   gameState = 'load';
 
-  IMAGE_logo.src = 'assets/game/logo.png';
-  IMAGE_goal.src = 'assets/game/goal.png';
+  IMAGE_logo.src = 'dist/assets/game/logo.png';
+  IMAGE_goal.src = 'dist/assets/game/goal.png';
 
   canvas.width = reCubedSettings.canWidth;
   canvas.height = reCubedSettings.canHeight;
