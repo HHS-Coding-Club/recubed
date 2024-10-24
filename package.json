@@ -15,17 +15,25 @@
     "rm-html": "rm ./dist/js/generateHTML.js",
     "rm-css": "rm ./dist/js/generateCSS.js",
     "cp-assets": "cp -r ./assets ./dist/",
-    "build": "npm run clean && npm run prettier && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run generate-html && npm run generate-css && npm run rm-html && npm run rm-css && npm run cp-assets"
+    "build": "npm run clean && npm run prettier && npm run tsc-build && npm run mkdir-js && npm run mkdir-css && npm run mv-js && npm run generate-html && npm run generate-css && npm run rm-html && npm run rm-css && npm run cp-assets",
+    "start": "http-server -p 8080 dist --cors",
+    "dev": "npm run build && npm run start"
   },
   "author": "colack",
   "license": "GPL-3.0-only",
   "devDependencies": {
     "@types/node": "^22.7.6",
-    "typescript": "^5.6.3",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "fs": "^0.0.1-security",
+    "fs-extra": "^11.2.0",
+    "handlebars": "^4.7.8",
+    "hbs": "^4.2.0",
+    "http-server": "^14.1.1",
+    "mongoose": "^8.7.2",
     "path": "^0.12.7"
   }
 }

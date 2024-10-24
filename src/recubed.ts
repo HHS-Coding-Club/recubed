@@ -2,8 +2,11 @@
     Global variables and settings
 */
 
+import * as CGL from './graphics'
+import * as utility from './utility'
+
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
 
 const reCubedSettings: {
   name: string;
@@ -361,16 +364,16 @@ function update() {
 function draw() {
   switch (gameState) {
     case 'load':
-      CGL_drawBackground(ctx, '#000000');
-      CGL_drawText(ctx, 'Loading...', 10, 20, '20px Helvetica', '#FFFFFF');
+      CGL.drawBackground(ctx, '#000000');
+      CGL.drawText(ctx, 'Loading...', 10, 20, '20px Helvetica', '#FFFFFF');
       break;
     case 'pressStart':
-      CGL_drawBackground(ctx, '#000000');
-      CGL_drawText(ctx, 'Press Enter to Start', 10, 20, '20px Helvetica', '#FFFFFF');
+      CGL.drawBackground(ctx, '#000000');
+      CGL.drawText(ctx, 'Press Enter to Start', 10, 20, '20px Helvetica', '#FFFFFF');
       break;
     default:
-      CGL_drawBackground(ctx, '#000000');
-      CGL_drawText(ctx, 'Error: Game State not found.', 10, 20, '20px Helvetica', '#FFFFFF');
+      CGL.drawBackground(ctx, '#000000');
+      CGL.drawText(ctx, 'Error: Game State not found.', 10, 20, '20px Helvetica', '#FFFFFF');
       break;
   }
 }
@@ -381,7 +384,7 @@ function input() {
       case 'pressStart':
         if (keys[keyBinds.enter]) {
           gameState = 'menu';
-          utility_setKeyDelay(keyDelayTime, inKeyDelay, keys);
+          utility.setKeyDelay(keyDelayTime, inKeyDelay, keys);
         }
         break;
       default:
