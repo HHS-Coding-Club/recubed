@@ -1,3 +1,5 @@
+// @ts-check
+
 import * as CGL from './graphics.js';
 import * as Utility from './utility.js';
 
@@ -369,8 +371,8 @@ function draw() {
       CGL.drawText(ctx, 'Press Enter to Start', 10, 20, '20px Helvetica', '#FFFFFF');
       break;
     case 'menu':
-      CGL.drawBackground(ctx, '#000000');
-      CGL.drawText(ctx, 'Menu', 10, 20, '20px Helvetica', '#FFFFFF');
+      CGL.drawMenuBackground(ctx, 'black', 'white', 'orange');
+      CGL.drawGameLogo(ctx, 10, 10, IMAGE_goal, IMAGE_logo, 'ReCubed', );
       break;
     default:
       CGL.drawBackground(ctx, '#000000');

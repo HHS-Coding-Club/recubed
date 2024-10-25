@@ -119,3 +119,21 @@ export function drawButton(context: CanvasRenderingContext2D, x: number, y: numb
   context.font = font;
   context.fillText(text, x + w / 2 - text.length * 5, y + h / 2 + 5);
 }
+
+export function drawLayeredButton(context: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, color: string, strokeColor: string, textColor: string, text: string, font: string) {
+  context.fillStyle = 'black';
+  context.fillRect(x + 10, y + 10, w, h);
+
+  context.fillStyle = 'white';
+  context.fillRect(x + 5, y + 5, w, h);
+
+  context.fillStyle = color;
+  context.fillRect(x, y, w, h);
+
+  context.strokeStyle = strokeColor;
+  context.strokeRect(x, y, w, h);
+
+  context.fillStyle = textColor;
+  context.font = font;
+  context.fillText(text, x + w / 2 - text.length * 5, y + h / 2 + 5);
+}
